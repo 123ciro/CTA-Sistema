@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="facturafecha" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="82a04c9a-0226-417d-b268-74297d501e37">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="DESDE" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="HASTA" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT fecha_venta,numero_factura_venta,estado_venta, SUM(total_detalleventa) FROM ventas v
+left join detallesventas dv on dv.id_venta=v.id_venta
+
+
+where estado_venta='FACTURADO' and fecha_venta between $P{DESDE} and $P{HASTA}
+
+ group by total_detalleventa,numero_factura_venta,fecha_venta,estado_venta]]>
+	</queryString>
+	<field name="fecha_venta" class="java.sql.Date"/>
+	<field name="numero_factura_venta" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="estado_venta" class="java.lang.String"/>
+	<field name="sum" class="java.lang.Long"/>
+	<variable name="TOTAL" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{sum}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="79" backcolor="#999999" uuid="1b635035-01e2-4a0d-adb7-96bcf72a616f"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="27" y="21" width="279" height="37" uuid="4b53dc8a-bce8-4c73-8b95-6d9183eb30f4"/>
+				<textElement>
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FACTURAS POR FECHA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="25" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="39" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="39" backcolor="#999999" uuid="3af31737-f8a9-4ff4-bbf3-b8c1838f1fef"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="12" y="9" width="100" height="20" uuid="4f836616-62c3-459f-9f99-6c781118b8b8"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° FACTURA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="206" y="9" width="100" height="20" uuid="70b5ff48-412f-4fbd-b5b6-9d7645a734b0"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="382" y="9" width="133" height="20" uuid="3a245920-8782-4498-a109-aad58c4c9b6c"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL FACTURA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="51" splitType="Stretch">
+			<textField pattern="0000000">
+				<reportElement x="12" y="13" width="100" height="20" uuid="5e231e65-c37b-4ab1-9de4-75d19c3abdbb"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{numero_factura_venta}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MM/dd/yyyy">
+				<reportElement x="206" y="13" width="100" height="20" uuid="8611b406-e3b6-4535-914c-9c36c34fcaca"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{fecha_venta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="403" y="13" width="100" height="20" uuid="6a055aa3-c90f-4327-bd2a-9ba9796447a1"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{sum}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<textField>
+				<reportElement x="410" y="22" width="100" height="20" uuid="80cf2f65-3ae6-4f79-ab99-b736647df8b6"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="348" y="22" width="55" height="20" uuid="51cdcc6b-8238-4906-90c5-b94d9645bfa5"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

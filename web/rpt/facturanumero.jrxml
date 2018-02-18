@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="facturanumero" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="57fdf223-6d72-46aa-ad2e-8ab1fa53c813">
+	<property name="ireport.zoom" value="1.6105100000000014"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="DESDE" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="HASTA" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT fecha_venta,numero_factura_venta, SUM(total_detalleventa),estado_venta FROM ventas v
+left join detallesventas dv on dv.id_venta=v.id_venta
+
+
+where estado_venta='FACTURADO' and numero_factura_venta between $P{DESDE} and $P{HASTA}
+
+ group by total_detalleventa,numero_factura_venta,fecha_venta,estado_venta]]>
+	</queryString>
+	<field name="fecha_venta" class="java.sql.Date"/>
+	<field name="numero_factura_venta" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sum" class="java.lang.Long"/>
+	<field name="estado_venta" class="java.lang.String"/>
+	<variable name="TOTAL" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{sum}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="79" backcolor="#999999" uuid="1607c6cd-4df0-4b56-9edf-3f787b3674e0"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="27" y="10" width="277" height="39" uuid="bd6ccd36-ee52-45da-bb24-881ee37d77f5"/>
+				<textElement>
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ FACTURAS POR NUMERO]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="24" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="75" y="0" width="100" height="20" uuid="3b4ccde1-dd4a-4375-a5c6-6268690d34f7"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NUMERO FACTURA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="325" y="0" width="120" height="20" uuid="d69a9fc3-f682-4f11-9d80-4c94b3b3b5af"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL FACTURA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="25" backcolor="#999999" uuid="f6fbabaf-ad36-4118-b451-6e4bc627a56e"/>
+			</rectangle>
+			<textField>
+				<reportElement x="75" y="5" width="100" height="20" uuid="c38d954b-5b4c-4362-b258-255edb67ccbd"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{numero_factura_venta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="325" y="5" width="100" height="20" uuid="c3971c71-3dfd-47cd-a099-04557006f327"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{sum}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="39" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="14" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="325" y="6" width="100" height="20" backcolor="#FFFFFF" uuid="7fb0a6ae-83cd-4278-a9d1-c98b674cf76a"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{TOTAL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="269" y="6" width="56" height="20" uuid="34b7eede-a58e-4713-8066-6891ab74d7bb"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

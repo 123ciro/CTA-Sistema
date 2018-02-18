@@ -1,0 +1,88 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+#panelAcceso{
+       max-width:  900px; /* comentario */
+    min-width: 250px;
+    width: 350px; /* comentario */
+    margin: auto;
+    margin-top: 8%;
+ 
+}
+#mensajes{
+    position: fixed;
+    bottom: 0;
+    margin-bottom: 0;
+    width: 100%;
+      
+    min-width: 250px;
+    height: 40px;
+    margin: auto;
+}
+
+#panelDiseño{
+    max-width:  900px; /* comentario */
+    min-width: 250px;
+    margin: auto;
+    margin-top: 5%;
+    
+    
+}
+#panelLinea{
+    max-width:  900px; /* comentario */
+    min-width: 250px;
+    margin: auto;
+    margin-top: 5%;
+   
+
+}
+
+#panelCobro{
+    max-width:  900px; /* comentario */
+    min-width: 250px;
+    margin: auto;
+    margin-top: 5%;
+   
+
+}
+
+#panelCuenta{
+    max-width:  900px; /* comentario */
+    min-width: 250px;
+    margin: auto;
+    margin-top: 5%;
+   
+
+}
+
+#panelDiseñoProductos{
+    width: 700px; /* comentario */
+    margin: auto;
+    margin-top: 5%;
+
+}
+
+
+.izquierda{
+    text-align: left;
+}
+.centrado{
+    text-align: center;
+}
+.derecha{
+    text-align: right;
+}
+.row{
+    margin-bottom: 3px;
+}
+tbody tr{
+    cursor: pointer;
+}
+@media (max-width: 700px){
+    .id{
+        display: none;
+    }
+}
+
+
